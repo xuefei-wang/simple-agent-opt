@@ -1,0 +1,47 @@
+[project]
+name = "simple-agent-optimization"
+version = "0.1.0"
+description = "AI agents autonomously optimize preprocessing/postprocessing for biomedical imaging pipelines"
+readme = "README.md"
+license = "Apache-2.0"
+requires-python = ">=3.10"
+dependencies = [
+    "scikit-image>=0.21",
+    "opencv-python>=4.8",
+    "pyyaml>=6.0",
+    "tqdm>=4.65",
+    "jupyter_kernel_gateway>=3.0",
+    "PyWavelets>=1.4",
+    "numpy>=1.24,<2.0",
+    "zarr>=2.16",
+    "torch>=2.0",
+    "ag2[openai,together]>=0.6",
+    "optuna>=3.3",
+    "python-dotenv>=1.0",
+    "scipy>=1.11",
+    "matplotlib>=3.7",
+    "pandas>=2.0",
+]
+
+[project.optional-dependencies]
+cellpose = [
+    "cellpose[gui]==3.1.1.1",
+    "tensorflow>=2.13",
+]
+medsam = [
+    "monai>=1.3",
+    "torchvision>=0.15",
+]
+polaris = [
+    "deepcell>=0.12",
+    "deepcell-spots>=0.3",
+]
+dev = [
+    "pytest>=7.0",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+    "integration: requires GPU, data, or external services",
+]

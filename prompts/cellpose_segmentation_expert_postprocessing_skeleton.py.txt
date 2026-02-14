@@ -1,0 +1,41 @@
+def postprocess_preds(preds):
+    """
+    This function provides a pipeline for post-processing segmentation masks. 
+
+    Parameters:
+        preds (list[np.ndarray]): A list of 2D or 3D labeled masks.
+                                  0 is background, positive integers are labels.
+
+    Returns:
+        list[np.ndarray]: A list of processed masks.
+    """
+    import numpy as np
+
+    # A helper function to relabel processed mask, do not modify this! 
+    def _relabel_sequentially(mask: np.ndarray) -> np.ndarray:
+        """
+        An helper function that relabels the objects in the mask to be sequential integers (1, 2, 3, ...).
+        Parameters:
+            mask (np.ndarray): A 2D or 3D array of labeled objects.
+        Returns:
+            np.ndarray: The mask with its object labels remapped to a sequential order.
+        """
+        unique_labels = np.unique(mask)
+        old_labels = unique_labels[unique_labels != 0]
+        relabeled_mask = np.zeros_like(mask)
+        for i, old_label in enumerate(old_labels):
+            new_label = i + 1
+            relabeled_mask[mask == old_label] = new_label            
+        return relabeled_mask
+
+    processed_preds = []
+    for mask in preds:
+        # Create a copy to avoid modifying the original input array
+        mask_copy = mask.copy()
+
+        processed_mask = mask_copy  # Replace with actual processing steps
+        
+        # Remap labels to be sequential
+        final_mask = _relabel_sequentially(processed_mask)
+        processed_preds.append(final_mask)
+    return processed_preds

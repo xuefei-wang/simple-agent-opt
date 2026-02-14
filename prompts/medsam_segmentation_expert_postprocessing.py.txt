@@ -1,0 +1,9 @@
+def postprocess_preds(preds):
+    """
+    Post-process the low-resolution probability predictions to obtain final segmentation masks.
+    """
+    import torch.nn.functional as F
+    upsampled = F.interpolate(preds, size=(512, 512), mode='bilinear', align_corners=False)
+    upsampled = upsampled.squeeze(1)
+    seg = (upsampled > 0.5).int()
+    return seg

@@ -1,0 +1,29 @@
+def postprocess_preds(preds):
+    """Convert raw prediction to a predicted point list using
+    ``skimage.feature.peak_local_max`` to determine local maxima in classification
+    prediction image, and their corresponding regression values will be used to
+    create a final spot position prediction which will be added to the output spot
+    center coordinates list.
+
+    Args:
+        preds (array): a dictionary of predictions with keys `'classification'` and
+            `'offset_regression'` 
+
+    Returns:
+        array: spot center coordinates of the format [[y0, x0], [y1, x1],...]
+    """
+    import numpy as np
+    from skimage.feature import peak_local_max
+    dot_centers = []
+    for ind in range(np.shape(preds['classification'])[0]):
+        dot_pixel_inds = peak_local_max(preds['classification'][ind, ..., 1],
+                                        min_distance=2,
+                                        threshold_abs=0.98)
+
+        delta_y = preds['offset_regression'][ind, ..., 0]
+        delta_x = preds['offset_regression'][ind, ..., 1]
+        dot_centers.append(np.array(
+            [[y_ind + delta_y[y_ind, x_ind],
+            x_ind + delta_x[y_ind, x_ind]] for y_ind, x_ind in dot_pixel_inds]))
+
+    return dot_centers

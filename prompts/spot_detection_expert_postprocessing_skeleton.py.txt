@@ -1,0 +1,36 @@
+def postprocess_preds(preds):
+    """Extracts spot coordinates from model predictions. The core task is to
+    translate the model's pixel-wise probability and offset regression maps into a
+    final list of floating-point (y, x) coordinates.
+
+    Args:
+        predictions (Dict[np.ndarray]): The model output, contains 'classification' and
+              'offset_regression' keys.
+              - 'classification': A pixel-wise probability map, for every pixel in the input 
+                image, this output provides the model's confidence that the pixel contains a 
+                fluorescent spot. Shape is (B, H, W, 2) where the last dimension represents
+                the probabilities for background and spot classes respectively. This can be used
+                to identify candidate spots.
+              - 'offset_regression': Provides the precise sub-pixel location of the nearest spot.
+                Shape is (B, H, W, 2) where the last dimension represents (dy, dx), the offset 
+                in y and x directions, respectively. This can be used to refine the subpixel 
+                location of spots found.
+        
+    Returns:
+        List[np.ndarray]: A list where each element is a numpy array of spot
+        coordinates for one image in the batch. Shape of each array is (N, 2) where N is the
+        number of detected spots, and each coordinate is in (y, x) format.
+    """
+    import numpy as np
+    final_coordinates = []
+    num_images = len(preds['classification'])
+    
+    for i in range(num_images):
+        class_map = preds['classification'][i, ..., 1]  # Probability map for spot class
+        offset_map = preds['offset_regression'][i]      # Offset map (dy, dx)
+
+        coords = [] # Replace with actual logic to extract coordinates
+        
+        final_coordinates.append(np.array(coords))
+
+    return final_coordinates

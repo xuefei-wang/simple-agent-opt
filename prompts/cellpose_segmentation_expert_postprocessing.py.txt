@@ -1,0 +1,40 @@
+def postprocess_preds(preds):
+    """ Fills holes in preds (2D/3D) and discards preds smaller than min_size.
+
+    This function fills holes in each mask using scipy.ndimage.morphology.binary_fill_holes.
+    It also removes preds that are smaller than the specified min_size.
+
+    Parameters:
+    preds (list[ndarray]): Int, 2D or 3D array of labelled masks.
+        0 represents no mask, while positive integers represent mask labels.
+        The size can be [Ly x Lx] or [Lz x Ly x Lx].
+
+    Returns:
+        list[ndarray]: Int, 2D or 3D array of masks with holes filled and small preds removed.
+            0 represents no mask, while positive integers represent mask labels.
+            The size is [Ly x Lx] or [Lz x Ly x Lx].
+    """
+    from scipy.ndimage import find_objects, binary_fill_holes
+    
+    min_size = 15
+    
+    new_preds = []
+    for mask in preds:
+        slices = find_objects(mask)
+        j = 0
+        for i, slc in enumerate(slices):
+            if slc is not None:
+                msk = mask[slc] == (i + 1)
+                npix = msk.sum()
+                if min_size > 0 and npix < min_size:
+                    mask[slc][msk] = 0
+                elif npix > 0:
+                    if msk.ndim == 3:
+                        for k in range(msk.shape[0]):
+                            msk[k] = binary_fill_holes(msk[k])
+                    else:
+                        msk = binary_fill_holes(msk)
+                    mask[slc][msk] = (j + 1)
+                    j += 1
+        new_preds.append(mask)
+    return new_preds

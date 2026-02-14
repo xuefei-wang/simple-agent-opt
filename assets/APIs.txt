@@ -1,0 +1,281 @@
+cv.bilateralFilter(src, d, sigmaColor, sigmaSpace[, dst[, borderType]]) ->dst
+Applies the bilateral filter to an image.
+
+cv.blur(src, ksize[, dst[, anchor[, borderType]]]) ->dst
+Blurs an image using the normalized box filter.
+
+cv.boxFilter(src, ddepth, ksize[, dst[, anchor[, normalize[, borderType]]]]) ->dst
+Blurs an image using the box filter.
+
+cv.dilate(src, kernel[, dst[, anchor[, iterations[, borderType[, borderValue]]]]]) ->dst
+Dilates an image by using a specific structuring element.
+
+cv.erode(src, kernel[, dst[, anchor[, iterations[, borderType[, borderValue]]]]]) ->dst
+Erodes an image by using a specific structuring element.
+
+cv.filter2D(src, ddepth, kernel[, dst[, anchor[, delta[, borderType]]]]) ->dst
+Convolves an image with the kernel.
+
+cv.GaussianBlur(src, ksize, sigmaX[, dst[, sigmaY[, borderType[, hint]]]]) ->dst
+Blurs an image using a Gaussian filter.
+
+cv.getDerivKernels(dx, dy, ksize[, kx[, ky[, normalize[, ktype]]]]) ->kx, ky
+Returns filter coefficients for computing spatial image derivatives.
+
+cv.getGaborKernel(ksize, sigma, theta, lambd, gamma[, psi[, ktype]]) ->retval
+Returns Gabor filter coefficients.
+
+cv.getGaussianKernel(ksize, sigma[, ktype]) ->retval
+Returns Gaussian filter coefficients.
+
+cv.getStructuringElement(shape, ksize[, anchor]) ->retval
+Returns a structuring element of the specified size and shape for morphological operations.
+
+cv.Laplacian(src, ddepth[, dst[, ksize[, scale[, delta[, borderType]]]]]) ->dst
+Calculates the Laplacian of an image.
+
+cv.medianBlur(src, ksize[, dst]) ->dst
+Blurs an image using the median filter.
+
+cv.pyrDown(src[, dst[, dstsize[, borderType]]]) ->dst
+Blurs an image and downsamples it.
+
+cv.pyrMeanShiftFiltering(src, sp, sr[, dst[, maxLevel[, termcrit]]]) ->dst
+Performs initial step of meanshift segmentation of an image.
+
+cv.pyrUp(src[, dst[, dstsize[, borderType]]]) ->dst
+Upsamples an image and then blurs it.
+
+cv.Scharr(src, ddepth, dx, dy[, dst[, scale[, delta[, borderType]]]]) ->dst
+Calculates the first x- or y- image derivative using Scharr operator.
+
+cv.sepFilter2D(src, ddepth, kernelX, kernelY[, dst[, anchor[, delta[, borderType]]]]) ->dst
+Applies a separable linear filter to an image.
+
+cv.Sobel(src, ddepth, dx, dy[, dst[, ksize[, scale[, delta[, borderType]]]]]) ->dst
+Calculates the first, second, third, or mixed image derivatives using an extended Sobel operator.
+
+cv.morphologyEx(src, op, kernel[, dst[, anchor[, iterations[, borderType[, borderValue]]]]]) -> dst
+Performs advanced morphological transformations.
+
+cv.spatialGradient(src[, dx[, dy[, ksize[, borderType]]]]) ->dx, dy
+Calculates the first order image derivative in both x and y using a Sobel operator.
+
+cv.sqrBoxFilter(src, ddepth, ksize[, dst[, anchor[, normalize[, borderType]]]]) ->dst
+Calculates the normalized sum of squares of the pixel values overlapping the filter.
+
+cv.stackBlur(src, ksize[, dst]) ->dst
+Blurs an image using the stackBlur.
+ 
+cv.Canny(image, threshold1, threshold2[, edges[, apertureSize[, L2gradient]]]) -> edges
+Finds edges in an image using the Canny algorithm.
+
+cv.cornerEigenValsAndVecs(src, blockSize, ksize[, dst[, borderType]]) -> dst
+Calculates eigenvalues and eigenvectors of image blocks for corner detection.
+
+cv.cornerHarris(src, blockSize, ksize, k[, dst[, borderType]]) -> dst
+Harris corner detector.
+
+cv.cornerMinEigenVal(src, blockSize[, dst[, ksize[, borderType]]]) -> dst
+Calculates the minimal eigenvalue of gradient matrices for corner detection.
+
+cv.cornerSubPix(image, corners, winSize, zeroZone, criteria) -> corners
+Refines the corner locations.
+
+cv.goodFeaturesToTrack(image, maxCorners, qualityLevel, minDistance[, corners[, mask[, blockSize[, useHarrisDetector[, k]]]]]) -> corners
+Determines strong corners on an image.
+
+cv.HoughCircles(image, method, dp, minDist[, circles[, param1[, param2[, minRadius[, maxRadius]]]]]) -> circles
+Finds circles in a grayscale image using the Hough transform.
+
+cv.HoughLines(image, rho, theta, threshold[, lines[, srn[, stn[, min_theta[, max_theta]]]]]) -> lines
+Finds lines in a binary image using the standard Hough transform.
+
+cv.HoughLinesP(image, rho, theta, threshold[, lines[, minLineLength[, maxLineGap]]]) -> lines
+Finds line segments in a binary image using the probabilistic Hough transform.
+
+cv.HoughLinesPointSet(point, lines_max, threshold, min_rho, max_rho, rho_step, min_theta, max_theta, theta_step[, lines]) -> lines
+Finds lines in a set of points using the standard Hough transform.
+
+cv.preCornerDetect(src, ksize[, dst[, borderType]]) -> dst
+Calculates a feature map for corner detection.
+
+cv.calcBackProject(images, channels, hist, ranges[, backProject[, scale[, uniform]]]) -> backProject
+Calculates the back projection of a histogram.
+
+cv.calcHist(images, channels, mask, histSize, ranges[, hist[, accumulate[, uniform]]]) -> hist
+Calculates a histogram of a set of arrays.
+
+cv.compareHist(H1, H2, method) -> retval
+Compares two histograms.
+
+cv.createCLAHE([clipLimit[, tileGridSize]]) -> retval
+Creates a smart pointer to a cv.CLAHE object and initializes it.
+
+cv.equalizeHist(src) -> dst
+Equalizes the histogram of a grayscale image.
+
+cv.addWeighted(src1, alpha, src2, beta, gamma[, dst[, dtype]]) -> dst
+Calculates the weighted sum of two arrays.
+
+cv.normalize(src, dst[, alpha[, beta[, norm_type[, dtype[, mask]]]]]) -> dst
+Normalizes the norm or value range of an array.
+
+cv.adaptiveThreshold(src, maxValue, adaptiveMethod, thresholdType, blockSize, C[, dst]) -> dst
+Applies an adaptive threshold to an array.
+
+cv.blendLinear(src1, src2, weights1, weights2[, dst]) -> dst
+Performs linear blending of two arrays using specified weights.
+
+cv.distanceTransform(src, distanceType, maskSize[, dst[, dstType]]) -> dst
+Calculates the distance to the closest zero pixel for each pixel of the source image.
+
+cv.floodFill(image, seedPoint, newVal[, loDiff[, upDiff[, flags[, mask[, rect]]]]]) -> retval, rect
+Fills a connected component with the given color.
+
+cv.integral(src[, sum[, sdepth]]) -> sum
+Calculates the integral image.
+
+cv.integral2(src[, sum[, sqsum[, sdepth[, sqdepth]]]]) -> sum, sqsum
+Calculates the integral and squared integral images.
+
+cv.integral3(src[, sum[, sqsum[, tilted[, sdepth[, sqdepth]]]]]) -> sum, sqsum, tilted
+Calculates the integral, squared integral, and tilted integral images.
+
+cv.threshold(src, thresh, maxval, type[, dst]) -> retval, dst
+Applies a fixed-level threshold to each array element.
+
+cv.fastNlMeansDenoising(src[, dst[, h[, templateWindowSize[, searchWindowSize]]]]) -> dst
+Perform image denoising using Non-local Means Denoising algorithm.
+
+cv.fastNlMeansDenoisingColored(src[, dst[, h[, hColor[, templateWindowSize[, searchWindowSize]]]]]) -> dst
+Modification of fastNlMeansDenoising function for colored images.
+
+cv.cvtColor(src, code[, dst[, dstCn]]) -> dst
+Converts an image from one color space to another.
+
+cv.merge(mv[, dst]) -> dst
+Creates one multi-channel array out of several single-channel ones.
+
+cv.resize(src, dsize[, dst[, fx[, fy[, interpolation]]]]) -> dst
+    Resizes an image. This is a fundamental operation for scaling images up or down using various interpolation methods.
+
+cv.warpAffine(src, M, dsize[, dst[, flags[, borderMode[, borderValue]]]]) -> dst
+    Applies an affine transformation to an image (e.g., rotation, translation, scaling). You provide a 2x3 transformation matrix M.
+
+cv.getRotationMatrix2D(center, angle, scale) -> retval
+    Calculates the 2x3 matrix for an affine rotation, which can then be used with cv.warpAffine.
+
+cv.warpPerspective(src, M, dsize[, dst[, flags[, borderMode[, borderValue]]]]) -> dst
+    Applies a perspective transformation to an image, useful for correcting perspective distortion or creating "birds-eye-view" effects.
+
+cv.matchTemplate(image, templ, method[, result[, mask]]) -> result
+    Scans a larger image to find occurrences of a smaller template image. It's a classic method for object detection.
+
+cv.findContours(image, mode, method[, contours[, hierarchy[, offset]]]) -> contours, hierarchy
+    Finds contours in a binary image. This is a core function for object detection, segmentation, and shape analysis.
+
+cv.drawContours(image, contours, contourIdx, color[, thickness[, lineType[, hierarchy[, maxLevel[, offset]]]]]) -> image
+    Draws the contours found by cv.findContours onto an image, which is essential for visualizing results.
+
+cv.bitwise_and(src1, src2[, dst[, mask]]) -> dst
+    Performs a per-element bitwise AND operation. This is extremely useful for applying masks to images to isolate regions of interest.
+
+skimage.filters.gaussian(image, sigma) -> ndarray
+    Applies a Gaussian filter. Excellent for smoothing and noise reduction while preserving edges better than a box filter.
+
+skimage.restoration.denoise_nl_means(image, ...) -> ndarray
+    Performs non-local means denoising, which is highly effective for reducing noise while keeping fine details, common in microscopy images.
+
+skimage.exposure.rescale_intensity(image, in_range, out_range) -> ndarray
+    Stretches or shrinks the intensity range of an image. Perfect for normalizing images to a specific range (e.g., 0 to 1).
+
+skimage.exposure.equalize_adapthist(image, kernel_size, ...) -> ndarray
+    Performs Contrast Limited Adaptive Histogram Equalization (CLAHE). 
+
+skimage.measure.label(input, connectivity) -> ndarray
+    Labels connected regions of an integer array. 
+
+skimage.segmentation.watershed(image, markers, mask) -> ndarray
+    Applies the watershed algorithm to separate touching objects. 
+
+skimage.measure.regionprops(label_image) -> list of RegionProperties
+    Measures properties (e.g., area, centroid, bounding box, perimeter) of labeled image regions. After labeling cells, you can use this to filter them by size or shape.
+
+skimage.morphology.remove_small_objects(ar, min_size) -> ndarray
+    Removes labeled objects smaller than a specified size. A critical postprocessing step to eliminate noise or incorrectly segmented small regions.
+
+skimage.morphology.remove_small_holes(ar, area_threshold) -> ndarray
+    Fills holes within objects that are smaller than a specified size. Useful for cleaning up cell masks.
+
+skimage.feature.peak_local_max(image, min_distance) -> ndarray
+    Finds local maxima in an image. 
+
+skimage.filters.frangi(image) -> ndarray
+    A filter designed to detect vessels, tubes, or other neurite-like structures in an image. It uses the Hessian matrix to identify objects based on their shape. 
+
+skimage.filters.meijering(image), sato(image)
+    Alternative neuriteness filters similar to Frangi, each with slightly different properties and sensitivities.
+
+skimage.restoration.denoise_wavelet(image) -> ndarray
+    Performs wavelet denoising, which can be very effective at preserving sharp features while removing noise.
+
+skimage.morphology.skeletonize(image) -> ndarray
+    Reduces binary objects to a 1-pixel wide representation (a "skeleton").
+
+skimage.segmentation.clear_border(labels) -> ndarray
+    Removes labeled objects that are touching the border of the image. 
+
+skimage.transform.rotate(image, angle, resize=False) -> ndarray
+    Rotates an image by a given angle around its center. A straightforward way to handle rotation.
+
+skimage.feature.blob_log(image, min_sigma, max_sigma, threshold) -> ndarray
+    Finds blobs in an image using the Laplacian of Gaussian (LoG) method. Excellent for detecting circular features of varying sizes, like cells or particles.
+
+skimage.filters.sobel(image) -> ndarray
+    Calculates the Sobel filter for edge magnitude detection. It provides an image where the intensity of each pixel represents the gradient magnitude.
+
+skimage.filters.unsharp_mask(image, radius, amount) -> ndarray
+    Sharpens an image using the unsharp masking technique, which enhances edges and fine details by subtracting a blurred version of the image from itself.
+
+skimage.metrics.structural_similarity(im1, im2, data_range) -> float
+    Computes the Structural Similarity Index (SSIM) between two images. A widely used metric for measuring image quality and similarity that is more robust than simple pixel-wise differences.
+
+scipy.ndimage.gaussian_filter(input, sigma) -> ndarray
+    Multi-dimensional Gaussian filter. A fast and robust alternative to the skimage and OpenCV versions.
+
+scipy.ndimage.median_filter(input, size) -> ndarray
+    Multi-dimensional median filter. Effective for salt-and-pepper noise removal.
+
+scipy.ndimage.label(input) -> (ndarray, int)
+    Similar to skimage.measure.label, it finds and labels connected components. Returns both the labeled array and the number of features found.
+
+scipy.ndimage.binary_fill_holes(input) -> ndarray
+    Fills holes in binary objects. A go-to function for ensuring segmented objects are solid.
+
+scipy.ndimage.distance_transform_edt(input) -> ndarray
+    Calculates the exact Euclidean distance transform. 
+
+scipy.ndimage.center_of_mass(input, labels, index) -> tuple of floats
+    Calculates the center of mass of values in an array for one or more regions. Useful for finding the centroid of detected cells.
+
+scipy.ndimage.zoom(input, zoom, order) -> ndarray
+    Resizes an N-dimensional image. Uses interpolation (e.g., order=0 for nearest-neighbor, order=1 for bilinear) and is very fast.
+
+scipy.ndimage.find_objects(labeled_image) -> list of slice tuples
+    Finds the bounding box slices for each labeled object. 
+
+scipy.ndimage.affine_transform(input, matrix) -> ndarray
+    Applies an affine transformation to an N-dimensional image, defined by an input transformation matrix. This is a powerful, low-level function for complex geometric operations.
+
+scipy.ndimage.map_coordinates(input, coordinates, order) -> ndarray
+    Transforms an image using a general coordinate transformation. This is one of the most powerful warping functions available, allowing for non-linear and custom distortions.
+
+scipy.ndimage.binary_opening(input, structure) -> ndarray
+    Performs a binary opening (erosion followed by dilation). It is a key morphological operation used to remove small noise and objects from a binary image.
+
+scipy.ndimage.binary_closing(input, structure) -> ndarray
+    Performs a binary closing (dilation followed by erosion). This is the counterpart to opening and is used to fill small holes and gaps within objects.
+
+scipy.ndimage.sum_labels(input, labels, index) -> float or list of floats
+    Calculates the sum of pixel values within regions defined by a label image. This is highly efficient for extracting measurements from segmented objects.

@@ -1,0 +1,31 @@
+def postprocess_preds(preds):
+    """
+    Upsamples and binarizes raw model predictions to create segmentation masks.
+
+    This function transforms low-resolution probability maps into final,
+    high-resolution binary masks by upsampling them to a target size of
+    512x512 and binarizing the values. The output masks will have pixel values
+    of either 0 (background) or 1 (object).
+
+    Args:
+        preds (torch.Tensor): The raw probability tensor from the model.
+            - Shape: `(N, 1, H, W)`, where `N` is the batch size.
+
+    Returns:
+        torch.Tensor: The final high-resolution, binary segmentation masks.
+            - Shape: `(N, 512, 512)`
+            - Dtype: Integer
+            - Values: `0` for background, `1` for the object.
+    """
+    # Fixed the target size for upsampling. Don't modify this line.
+    target_size = (512, 512)
+    # Create a copy and convert to numpy arrays
+    preds_copy = preds.clone().cpu().numpy()
+    
+    processed_masks = preds_copy # Replace with actual processing steps to get masks
+
+    # Convert back to tensors and squeeze the channel dimension
+    processed_masks = torch.from_numpy(processed_masks).to(preds.device)
+    processed_masks = processed_masks.squeeze(1)
+
+    return processed_masks

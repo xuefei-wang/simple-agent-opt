@@ -1,0 +1,311 @@
+import logging
+from pathlib import Path
+import numpy as np
+import torch
+import json
+import os
+import time
+import traceback
+import re
+import inspect
+import tempfile
+{task_extra_imports}
+
+# --- Dependency Imports ---
+try:
+    from src.data_io import ImageData
+{task_imports}
+except ImportError as import_err:
+    print(f"FATAL ERROR: Failed to import required modules (ImageData, Tool): {import_err}")
+    print(traceback.format_exc())
+    exit(1)
+
+
+# --- Configuration (Replaced by run_pipeline_prompt) ---
+gpu_id = {gpu_id}
+seed = {seed} # Seed is now an integer, no quotes needed
+k = {sample_k}
+data_path = r"{dataset_path}"
+function_bank_path = r"{function_bank_path}"
+script_start_time = time.time()
+{task_extra_config}
+
+# --- Saving Function Definition ---
+def save_results_to_json(file_path, results_dict):
+    '''Appends results dictionary to the JSON file specified.'''
+    print(f"(Saver) Attempting to save results to: {file_path}")
+    results_dict['timestamp'] = results_dict.get('timestamp', time.time())
+    try:
+        output_dir = os.path.dirname(file_path)
+        if output_dir and not os.path.exists(output_dir):
+            os.makedirs(output_dir, exist_ok=True)
+            print(f"(Saver) Created directory: {output_dir}")
+        try:
+            if not os.path.exists(file_path):
+                 print(f"(Saver) Warning: JSON file '{file_path}' not found. Creating empty list.")
+                 existing_data = []
+                 with open(file_path, 'w') as f: json.dump(existing_data, f)
+            with open(file_path, 'r') as f:
+                existing_data = json.load(f)
+            if not isinstance(existing_data, list):
+                 print(f"(Saver) Warning: JSON file '{file_path}' did not contain a list. Re-initializing.")
+                 existing_data = []
+        except (FileNotFoundError, json.JSONDecodeError):
+             print(f"(Saver) Warning: Could not read or decode existing JSON '{file_path}'. Starting new list.")
+             existing_data = []
+        except Exception as read_err:
+             print(f"(Saver) Error reading existing file {file_path}: {read_err}. Starting new list.")
+             existing_data = []
+        results_list = [dict(zip(results_dict.keys(), values)) for values in zip(*results_dict.values())]
+        existing_data.extend(results_list)
+        # Atomic write: write to temp file then rename, so a crash mid-write
+        # won't corrupt the function bank JSON
+        dir_name = os.path.dirname(file_path) or '.'
+        with tempfile.NamedTemporaryFile('w', dir=dir_name, suffix='.tmp', delete=False) as tmp_f:
+            json.dump(existing_data, tmp_f, indent=4)
+            tmp_path = tmp_f.name
+        os.replace(tmp_path, file_path)
+        print(f"(Saver) Successfully appended results to {file_path}")
+    except Exception as e:
+        print(f"(Saver) !!! ERROR saving results to {file_path}: {e}\\n{traceback.format_exc()}")
+
+
+# --- Setup Logging ---
+logger = None
+# Use function_bank_path (already defined above) to derive log path
+log_file_path = os.path.join(os.path.dirname(function_bank_path), "pipeline_run.log")
+output_dir_for_log = os.path.dirname(log_file_path)
+if output_dir_for_log and not os.path.exists(output_dir_for_log):
+     try:
+         os.makedirs(output_dir_for_log, exist_ok=True)
+         print(f"Created log directory: {output_dir_for_log}")
+     except OSError as e:
+         print(f"Warning: Could not create log directory {output_dir_for_log}: {e}")
+         log_file_path = "pipeline_run.log" # Fallback
+
+print(f"Setting up logging to file: {log_file_path}")
+try:
+    logging.basicConfig(
+        level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s",
+        handlers=[
+            logging.FileHandler(log_file_path),
+            logging.StreamHandler()
+        ],
+        force=True
+    )
+    logger = logging.getLogger(__name__)
+    logger.info("Logging configured successfully.")
+except Exception as log_e:
+     print(f"Error configuring logging: {log_e}. Using basic print statements.")
+     class PrintLogger:
+         def info(self, msg, *args): print("INFO: " + (msg % args if args else msg))
+         def warning(self, msg, *args): print("WARNING: " + (msg % args if args else msg))
+         def error(self, msg, *args): print("ERROR: " + (msg % args if args else msg))
+         def exception(self, msg, *args): print("EXCEPTION: " + (msg % args if args else msg) + f"\\n{traceback.format_exc()}")
+     logger = PrintLogger()
+
+
+# --- Initialize variables ---
+k_overall_metrics = []
+k_preprocessing_times = []
+k_postprocessing_times = []
+k_prediction_times = []
+k_metrics_times = []
+pipeline_error = None
+pipeline_traceback = None
+k_preprocess_images_fns = []
+k_postprocess_preds_fns = []
+k_preprocessed_images = []
+k_predictions = []
+k_final = []
+k_preprocess_images_fns_single_img = []
+k_postprocess_preds_fns_single_img = []
+k_preprocessed_images_single_img = []
+k_preprocessing_times_single_img = []
+k_postprocessing_times_single_img = []
+k_predictions_single_img = []
+k_final_single_img = []
+k_prediction_times_single_img = []
+k_metrics_times_single_img = []
+k_overall_metrics_single_img = []
+
+# --- Generated Preprocessing & Postprocessing Function Definition ---
+# This placeholder will be replaced by the executor
+{_PREPROCESSING_POSTPROCESSING_FUNCTIONS_PLACEHOLDER}
+# --- End of Generated Code ---
+
+try:
+    # --- Check if functions exist ---
+    for i in range(k):
+        if f'preprocess_images_{i + 1}' not in globals() or not callable(globals().get(f'preprocess_images_{i + 1}', None)):
+            err_msg = f"FATAL: preprocess_images_{i + 1} function not defined correctly by generated code."
+            logger.error(err_msg)
+            raise NameError(err_msg)
+        else:
+            k_preprocess_images_fns.append(globals().get(f'preprocess_images_{i + 1}', None))
+            k_preprocess_images_fns_single_img.append(globals().get(f'preprocess_images_{i + 1}', None))
+            logger.info(f"preprocess_images_{i + 1} function appears to be defined.")
+
+    for i in range(k):
+        if f'postprocess_preds_{i + 1}' not in globals() or not callable(globals().get(f'postprocess_preds_{i + 1}', None)):
+            err_msg = f"FATAL: postprocess_preds_{i + 1} function not defined correctly by generated code."
+            logger.error(err_msg)
+            raise NameError(err_msg)
+        else:
+            k_postprocess_preds_fns.append(globals().get(f'postprocess_preds_{i + 1}', None))
+            k_postprocess_preds_fns_single_img.append(globals().get(f'postprocess_preds_{i + 1}', None))
+            logger.info(f"postprocess_preds_{i + 1} function appears to be defined.")
+
+    # --- Set random seeds ---
+    logger.info(f"Setting random seeds using integer seed: {seed}")
+    np.random.seed(seed)
+    torch.manual_seed(seed)
+    if torch.cuda.is_available(): torch.cuda.manual_seed_all(seed)
+
+    # --- Initialize tool and load data ---
+{task_setup}
+
+    for i, preprocess_images in enumerate(k_preprocess_images_fns_single_img):
+        logger.info(f"[Single Image] Applying preprocess_images_{i + 1} function...")
+        preprocessing_start_time = time.time()
+        try:
+            k_preprocessed_images_single_img.append(preprocess_images(single_image_data))
+            k_preprocessing_times_single_img.append(time.time() - preprocessing_start_time)
+            logger.info(f"[Single Image] Preprocessing {i + 1} finished in {k_preprocessing_times_single_img[i]:.2f} seconds.")
+            if not isinstance(k_preprocessed_images_single_img[-1], ImageData):
+                raise TypeError(f"Preprocessing function {i + 1} returned type {type(k_preprocessed_images_single_img[-1])}, expected ImageData.")
+        except Exception as preprocess_error:
+            logger.error(f"[Single Image] !!! ERROR occurred inside the dynamically generated preprocess_images_{i + 1} function:")
+            logger.exception(preprocess_error)
+            raise preprocess_error
+
+    # --- [Single Image] Run Predictions ---
+    for i, preprocessed_images in enumerate(k_preprocessed_images_single_img):
+        logger.info(f"[Single Image] Running prediction {i + 1}...")
+        prediction_start_time = time.time()
+        k_predictions_single_img.append({task_predict_single})
+        k_prediction_times_single_img.append(time.time() - prediction_start_time)
+        logger.info(f"[Single Image] Prediction finished in {k_prediction_times_single_img[i]:.2f} seconds.")
+
+    # --- [Single Image] Apply Postprocessing ---
+    for i, pred in enumerate(k_predictions_single_img):
+        logger.info(f"[Single Image] Applying postprocess_preds_{i + 1} function...")
+        postprocessing_start_time = time.time()
+        try:
+            k_final_single_img.append(globals().get(f'postprocess_preds_{i + 1}', lambda x: x)(pred))
+            k_postprocessing_times_single_img.append(time.time() - postprocessing_start_time)
+            logger.info(f"[Single Image] Postprocessing {i + 1} finished in {k_postprocessing_times_single_img[i]:.2f} seconds.")
+{task_postprocess_check_single}
+        except Exception as postprocess_error:
+            logger.error(f"[Single Image] !!! ERROR occurred inside the dynamically generated postprocess_preds_{i + 1} function:")
+            logger.exception(postprocess_error)
+            raise postprocess_error
+
+    # --- [Single Image] Calculate Metrics ---
+    for i, pred in enumerate(k_final_single_img):
+        logger.info(f"[Single Image] Calculating metrics for prediction {i + 1}...")
+        metrics_start_time = time.time()
+{task_evaluate_single}
+        k_metrics_times_single_img.append(time.time() - metrics_start_time)
+        logger.info(f"[Single Image] Metrics calculation finished in {k_metrics_times_single_img[i]:.2f} seconds.")
+
+    # --- Apply Preprocessing ---
+    for i, preprocess_images in enumerate(k_preprocess_images_fns):
+        logger.info(f"Applying preprocess_images_{i + 1} function...")
+        preprocessing_start_time = time.time()
+        try:
+            k_preprocessed_images.append(preprocess_images(images))
+            k_preprocessing_times.append(time.time() - preprocessing_start_time)
+            logger.info(f"Preprocessing {i + 1} finished in {k_preprocessing_times[i]:.2f} seconds.")
+            if not isinstance(k_preprocessed_images[-1], ImageData):
+                raise TypeError(f"Preprocessing function {i + 1} returned type {type(k_preprocessed_images[-1])}, expected ImageData.")
+        except Exception as preprocess_error:
+            logger.error(f"!!! ERROR occurred inside the dynamically generated preprocess_images_{i + 1} function:")
+            logger.exception(preprocess_error)
+            raise preprocess_error
+
+    # --- Run Predictions ---
+    for i, preprocessed_images in enumerate(k_preprocessed_images):
+        logger.info(f"Running prediction {i + 1}...")
+        prediction_start_time = time.time()
+        k_predictions.append({task_predict_full})
+        k_prediction_times.append(time.time() - prediction_start_time)
+        logger.info(f"Prediction finished in {k_prediction_times[i]:.2f} seconds.")
+
+    # --- Apply Postprocessing ---
+    for i, pred in enumerate(k_predictions):
+        logger.info(f"Applying postprocess_preds_{i + 1} function...")
+        postprocessing_start_time = time.time()
+        try:
+            k_final.append(globals().get(f'postprocess_preds_{i + 1}', lambda x: x)(pred))
+            k_postprocessing_times.append(time.time() - postprocessing_start_time)
+            logger.info(f"Postprocessing {i + 1} finished in {k_postprocessing_times[i]:.2f} seconds.")
+{task_postprocess_check_full}
+        except Exception as postprocess_error:
+            logger.error(f"!!! ERROR occurred inside the dynamically generated postprocess_preds_{i + 1} function:")
+            logger.exception(postprocess_error)
+            raise postprocess_error
+
+    # --- Calculate Metrics ---
+    for i, pred in enumerate(k_final):
+        logger.info(f"Calculating metrics for prediction {i + 1}...")
+        metrics_start_time = time.time()
+{task_evaluate_full}
+        k_metrics_times.append(time.time() - metrics_start_time)
+        logger.info(f"Metrics calculation finished in {k_metrics_times[i]:.2f} seconds.")
+
+    # --- Log Metrics ---
+{task_metrics_log}
+
+    # --- Save Results ---
+    if k_overall_metrics:
+        logger.info("Saving successful results to function bank...")
+        # Use inspect.getsource to get function source code and rename functions
+        k_preprocessing_functions = [
+            re.sub(
+                r'^(\s*def\s+)preprocess_images_\d+(\s*\()',
+                r'\1preprocess_images\2',
+                inspect.getsource(func),
+                flags=re.MULTILINE
+            )
+            for func in k_preprocess_images_fns
+        ]
+        k_postprocessing_functions = [
+            re.sub(
+                r'^(\s*def\s+)postprocess_preds_\d+(\s*\()',
+                r'\1postprocess_preds\2',
+                inspect.getsource(func),
+                flags=re.MULTILINE
+            )
+            for func in k_postprocess_preds_fns
+        ]
+        results_to_save = {
+            'preprocessing_function': k_preprocessing_functions,
+            'postprocessing_function': k_postprocessing_functions,
+            'overall_metrics': k_overall_metrics,
+            'seed': [seed] * k,
+            'timestamp': [script_start_time] * k,
+            'gpu_id': [gpu_id] * k,
+            'timestamp_finish': [time.time()] * k,
+            'preprocessing_time': k_preprocessing_times,
+            'postprocessing_time': k_postprocessing_times,
+            'prediction_time': k_prediction_times,
+            'metrics_time': k_metrics_times,
+            'error': [None] * k,
+            'traceback': [None] * k
+        }
+        save_results_to_json(function_bank_path, results_to_save)
+    else:
+        logger.warning("Pipeline seemed to complete, but no metrics were generated. Not saving to bank.")
+
+except Exception as e:
+     pipeline_error = f"Error during pipeline execution: {str(e)}"
+     pipeline_traceback = traceback.format_exc()
+     logger.error(f"!!! ERROR during pipeline execution:")
+     logger.exception(e)
+
+finally:
+    logger.info("--- Run Finished ---")
+    if 'pipeline_error' in locals() and pipeline_error:
+        logger.warning("Exiting with error code 1 due to pipeline failure.")
+        exit(1)

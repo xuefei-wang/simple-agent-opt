@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple Agents Outperform Experts in Biomedical Imaging Workflow Optimization</title>
+  <meta name="description" content="AI agents autonomously optimize preprocessing and postprocessing for scientific image analysis, outperforming human-expert solutions on three production-level biomedical imaging pipelines.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&family=Noto+Serif:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="static/css/style.css">
+</head>
+<body>
+
+  <!-- ==================== Hero ==================== -->
+  <section class="hero">
+    <div class="container">
+      <h1>Simple Agents Outperform Experts in Biomedical Imaging Workflow Optimization</h1>
+
+      <p class="authors">
+        Xuefei (Julie) Wang<sup>1</sup>,
+        Kai A. Horstmann<sup>2</sup>,
+        Ethan Lin<sup>2</sup>,
+        Jonathan Chen<sup>2</sup>,
+        Alexander R. Farhang<sup>1</sup>,
+        Sophia Stiles<sup>1</sup>,
+        Atharva Sehgal<sup>3</sup>,
+        Jonathan Light<sup>4</sup>,
+        David Van Valen<sup>1</sup>,
+        Yisong Yue<sup>1</sup>,
+        Jennifer J. Sun<sup>2</sup>
+      </p>
+      <p class="institutions">
+        <sup>1</sup>Caltech &nbsp;
+        <sup>2</sup>Cornell &nbsp;
+        <sup>3</sup>UT Austin &nbsp;
+        <sup>4</sup>Rensselaer Polytechnic Institute
+      </p>
+
+      <div class="hero-buttons">
+        <a class="btn btn--primary" href="https://arxiv.org/abs/2512.06006" target="_blank" rel="noopener">
+          <i class="ai ai-arxiv"></i> arXiv
+        </a>
+        <a class="btn" href="https://github.com/xuefei-wang/simple-agent-opt" target="_blank" rel="noopener">
+          <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+          Code
+        </a>
+        <button class="btn" onclick="document.getElementById('citation').scrollIntoView({behavior:'smooth'})">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em"><path d="M6 9h6V5l7 7-7 7v-4H6V9z"/></svg>
+          Cite
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== Abstract ==================== -->
+  <section>
+    <div class="container">
+      <h2 class="section-title">Abstract</h2>
+      <p class="abstract-text">
+        Adapting production-level computer vision tools to bespoke scientific datasets is a critical
+        &ldquo;last mile&rdquo; bottleneck. Current solutions are impractical: fine-tuning requires large
+        annotated datasets scientists often lack, while manual code adaptation costs scientists weeks
+        to months of effort. We consider using AI agents to automate this manual coding, and focus on
+        the open question of optimal agent design for this targeted task. We introduce a systematic
+        evaluation framework for agentic code optimization and use it to study three production-level
+        biomedical imaging pipelines. We demonstrate that a simple agent framework consistently
+        generates adaptation code that outperforms human-expert solutions. Our analysis reveals that
+        common, complex agent architectures are not universally beneficial, leading to a practical
+        roadmap for agent design. We open source our framework and validate our approach by deploying
+        agent-generated functions into a production pipeline, demonstrating a clear pathway for
+        real-world impact.
+      </p>
+    </div>
+  </section>
+
+  <!-- ==================== Key Findings ==================== -->
+  <section class="highlights">
+    <div class="container">
+      <h2 class="section-title">Key Findings</h2>
+
+      <div class="findings-list">
+        <div class="finding">
+          <div class="finding-icon">1</div>
+          <div class="finding-content">
+            <h3>Simple agents outperform human experts</h3>
+            <p>A minimal two-agent system (coding agent + execution agent) consistently generates adaptation code that surpasses expert-engineered solutions across all three biomedical imaging tasks&mdash;replacing weeks to months of manual tuning.</p>
+          </div>
+        </div>
+        <div class="finding">
+          <div class="finding-icon">2</div>
+          <div class="finding-content">
+            <h3>More complexity does not mean better performance</h3>
+            <p>Design choices like expert functions, reasoning LLMs, and function banks show mixed effects&mdash;what helps one task hurts another. Only the data prompt is universally beneficial. Omitting the API list consistently <em>improved</em> scores.</p>
+          </div>
+        </div>
+        <div class="finding">
+          <div class="finding-icon">3</div>
+          <div class="finding-content">
+            <h3>Task structure determines which components help</h3>
+            <p>We introduce a framework characterizing each task&rsquo;s solution space along two axes: API space (concentrated vs. dispersed) and parameter space (easy vs. hard to optimize). This explains the mixed effects and provides a practical roadmap for agent design.</p>
+          </div>
+        </div>
+        <div class="finding">
+          <div class="finding-icon">4</div>
+          <div class="finding-content">
+            <h3>Minimal agents match proprietary tree-search systems</h3>
+            <p>When benchmarked against the AIDE agent (tree-search architecture) with comparable compute budgets, our open-source minimal agents achieve equivalent performance with greater transparency and lower cost.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== Method ==================== -->
+  <section>
+    <div class="container">
+      <h2 class="section-title">Method</h2>
+
+      <figure class="method-figure method-figure--portrait method-figure--dark">
+        <img src="static/images/pipeline.png" alt="Agent optimization pipeline diagram">
+        <figcaption>
+          Overview of the agent optimization loop. Each iteration, the code writer agent generates
+          preprocessing/postprocessing function pairs that are executed and evaluated. A function bank
+          accumulates all solutions with metrics, feeding the best and worst back into prompts to guide exploration.
+        </figcaption>
+      </figure>
+
+      <ul class="method-points">
+        <li><strong>Base Agent</strong> &mdash; a coding agent (LLM-powered) and an execution agent alternate via state transitions. A task prompt and data prompt provide context; a curated API list gives the agent relevant function signatures.</li>
+        <li><strong>Function Bank</strong> &mdash; a persistent memory of all generated solutions and their scores. The top-k and bottom-k functions are fed back into prompts to guide further exploration.</li>
+        <li><strong>Expert Functions</strong> &mdash; human-expert optimized postprocessing functions can be provided as in-context examples to bootstrap the search.</li>
+        <li><strong>AutoML Agent</strong> &mdash; an optional component that periodically analyzes generated code, identifies optimizable parameters, and runs Optuna-based hyperparameter search.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ==================== Results ==================== -->
+  <section>
+    <div class="container">
+      <h2 class="section-title">Results</h2>
+
+      <p class="results-intro">Design Choice Study. Across all agent settings, all except the &ldquo;Small LLM&rdquo; outperform the expert baseline. We observe mixed effects across many design choices&mdash;what helps one task can hurt another.</p>
+
+      <div class="table-wrap">
+        <table class="results-table design-table">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Expert<br>Baseline</th>
+              <th>Base<br>Agent</th>
+              <th>+ Expert<br>Function</th>
+              <th>+ Function<br>Bank</th>
+              <th>Reasoning<br>LLM</th>
+              <th>Small<br>LLM</th>
+              <th>No Data<br>Prompt</th>
+              <th>No API<br>List</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Polaris</strong> <span class="table-metric">F1</span></td>
+              <td>0.841</td>
+              <td>0.867</td>
+              <td class="cell-good">0.929</td>
+              <td class="cell-good">0.889</td>
+              <td class="cell-bad">0.844</td>
+              <td class="cell-bad">0.805</td>
+              <td class="cell-bad">0.856</td>
+              <td class="cell-good">0.868</td>
+            </tr>
+            <tr>
+              <td><strong>Cellpose</strong> <span class="table-metric">AP@0.5</span></td>
+              <td>0.402</td>
+              <td>0.409</td>
+              <td class="cell-good">0.410</td>
+              <td class="cell-good">0.416</td>
+              <td class="cell-good">0.412</td>
+              <td class="cell-bad">0.397</td>
+              <td class="cell-bad">0.406</td>
+              <td class="cell-good">0.417</td>
+            </tr>
+            <tr>
+              <td><strong>MedSAM</strong> <span class="table-metric">NSD+DSC</span></td>
+              <td>0.820</td>
+              <td>0.971</td>
+              <td class="cell-bad">0.888</td>
+              <td class="cell-bad">0.943</td>
+              <td class="cell-good">1.020</td>
+              <td class="cell-bad">0.918</td>
+              <td class="cell-bad">0.952</td>
+              <td class="cell-good">1.037</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <figure class="method-figure method-figure--dark">
+        <img src="static/images/results.png" alt="Comparison of expert-optimized and agent-optimized segmentation results">
+        <figcaption>
+          Comparison of expert-optimized and agent-optimized MedSAM segmentation results, showing
+          visual outputs and the corresponding preprocessing/postprocessing code.
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ==================== Task Showcase ==================== -->
+  <section>
+    <div class="container">
+      <h2 class="section-title">Task Showcase</h2>
+
+      <div class="task-grid">
+        <!-- Spot Detection -->
+        <div class="task-card">
+          <img src="static/images/spot.png" alt="Spot detection example">
+          <div class="task-card-body">
+            <span class="scale-label">Molecular</span>
+            <h3>Spot Detection</h3>
+            <span class="tool-tag">Polaris / DeepCell</span>
+            <p class="metric">Metric: F1 score &middot; Expert: 0.841 &middot; Best agent: 0.929</p>
+            <p>Detecting sub-pixel fluorescent spots for image-based spatial transcriptomics across modalities using different RNA capturing and tagging methods. Validated on 95 images.</p>
+          </div>
+        </div>
+
+        <!-- Cellpose -->
+        <div class="task-card">
+          <img src="static/images/cellpose.png" alt="Cell segmentation example">
+          <div class="task-card-body">
+            <span class="scale-label">Cellular</span>
+            <h3>Cell Segmentation</h3>
+            <span class="tool-tag">Cellpose 3 (cyto3)</span>
+            <p class="metric">Metric: AP @ IoU 0.5 &middot; Expert: 0.402 &middot; Best agent: 0.417</p>
+            <p>Cell instance segmentation on multiple modalities including whole cell &amp; nucleus, fluorescent, and phase bacterial images. Validated on 100 images.</p>
+          </div>
+        </div>
+
+        <!-- MedSAM -->
+        <div class="task-card">
+          <img src="static/images/medsam.png" alt="Medical segmentation example">
+          <div class="task-card-body">
+            <span class="scale-label">Macroscopic</span>
+            <h3>Medical Segmentation</h3>
+            <span class="tool-tag">MedSAM</span>
+            <p class="metric">Metric: NSD + DSC &middot; Expert: 0.820 &middot; Best agent: 1.037</p>
+            <p>Medical image segmentation using an extension of the Segment Anything Model adapted to medical domains, evaluated on dermoscopy data. Validated on 25 images.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== Getting Started ==================== -->
+  <section class="getting-started">
+    <div class="container">
+      <h2 class="section-title">Getting Started</h2>
+      <p>Clone the repository and install dependencies using <a href="https://docs.astral.sh/uv/" target="_blank" rel="noopener">uv</a>. See the <a href="https://github.com/xuefei-wang/simple-agent-opt/blob/main/docs/adding_a_task.md" target="_blank" rel="noopener">Adding a Task</a> guide for extending the framework to new workflows.</p>
+
+      <div class="code-block">
+        <span class="code-label">bash</span>
+<pre><span class="comment"># Clone and install</span>
+<span class="cmd">git clone</span> https://github.com/xuefei-wang/simple-agent-opt.git
+<span class="cmd">cd</span> simple-agent-opt
+<span class="cmd">uv venv</span> && <span class="cmd">source</span> .venv/bin/activate
+<span class="cmd">uv pip install</span> -e ".[cellpose]"   <span class="comment"># or .[polaris], .[medsam]</span>
+
+<span class="comment"># Set your API key</span>
+<span class="cmd">export</span> OPENAI_API_KEY="your-key-here"
+
+<span class="comment"># Run an experiment</span>
+<span class="cmd">python</span> main.py \
+    --dataset /path/to/data \
+    --experiment_name cellpose_segmentation \
+    --random_seed 42 -k 3</pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== Citation ==================== -->
+  <section class="citation" id="citation">
+    <div class="container">
+      <h2 class="section-title">Citation</h2>
+      <p>If you find this work useful, please cite our paper:</p>
+
+      <div class="code-block">
+        <span class="code-label">bibtex</span>
+        <button class="copy-btn" onclick="copyBibtex(this)">Copy</button>
+<pre id="bibtex">@article{wang2025simple,
+  title   = {Simple Agents Outperform Experts in Biomedical Imaging
+             Workflow Optimization},
+  author  = {Wang, Xuefei and Horstmann, Kai A. and Lin, Ethan and
+             Chen, Jonathan and Farhang, Alexander R. and Stiles, Sophia and
+             Sehgal, Atharva and Light, Jonathan and Van Valen, David and
+             Yue, Yisong and Sun, Jennifer J.},
+  journal = {arXiv preprint arXiv:2512.06006},
+  year    = {2025}
+}</pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== Footer ==================== -->
+  <footer>
+    <div class="container">
+      <p>
+        This project is licensed under the <a href="https://github.com/xuefei-wang/simple-agent-opt/blob/main/LICENSE" target="_blank" rel="noopener">Apache License 2.0</a>.
+        Website template inspired by <a href="https://nerfies.github.io" target="_blank" rel="noopener">Nerfies</a>.
+      </p>
+    </div>
+  </footer>
+
+  <!-- ==================== Scripts ==================== -->
+  <script>
+    function copyBibtex(btn) {
+      const text = document.getElementById('bibtex').textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        btn.textContent = 'Copied!';
+        setTimeout(() => { btn.textContent = 'Copy'; }, 2000);
+      });
+    }
+  </script>
+
+</body>
+</html>
