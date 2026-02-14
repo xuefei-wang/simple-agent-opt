@@ -4,9 +4,9 @@
   --color-bg-alt: #f8f8fa;
   --color-text: #1a1a2e;
   --color-text-secondary: #4a4a64;
-  --color-accent: #2563eb;
-  --color-accent-light: #eff4ff;
-  --color-accent-hover: #1d4ed8;
+  --color-accent: #2ac5a0;
+  --color-accent-light: #eefbf7;
+  --color-accent-hover: #22a888;
   --color-border: #e2e2e8;
   --color-code-bg: #1b1b2f;
   --color-code-text: #d4d4d4;
@@ -38,7 +38,7 @@ body::before {
   content: "";
   display: block;
   height: 3px;
-  background: linear-gradient(90deg, var(--color-accent), #7c3aed, var(--color-accent));
+  background: linear-gradient(90deg, var(--color-accent), #1a9e8a, var(--color-accent));
 }
 
 /* ===== Layout ===== */
@@ -50,7 +50,7 @@ section:nth-child(even) { background: var(--color-bg-alt); }
 .hero {
   padding: clamp(3.5rem, 8vw, 6rem) 0 var(--section-pad);
   text-align: center;
-  background: linear-gradient(180deg, #f0f4ff 0%, var(--color-bg) 100%);
+  background: linear-gradient(180deg, #eefbf7 0%, var(--color-bg) 100%);
 }
 .hero h1 {
   font-family: var(--font-serif);
@@ -236,8 +236,8 @@ section:nth-child(even) { background: var(--color-bg-alt); }
 .design-table td { text-align: center; padding: 0.6rem 0.55rem; font-variant-numeric: tabular-nums; }
 .design-table td:first-child { text-align: left; white-space: nowrap; }
 .table-metric { font-size: 0.72rem; color: var(--color-text-secondary); font-weight: 400; }
-.cell-good { background: #e8f5e9; }
-.cell-bad { background: #fff3e0; }
+.cell-good { background: #e0f7f1; }
+.cell-bad { background: #fef3e2; }
 
 /* ===== Task Showcase ===== */
 .task-grid {
@@ -313,7 +313,7 @@ section:nth-child(even) { background: var(--color-bg-alt); }
   white-space: pre;
   margin: 0;
 }
-.code-block .comment { color: #6a9955; }
+.code-block .comment { color: #5dba9e; }
 .code-block .cmd { color: #dcdcaa; }
 .code-label {
   position: absolute;
