@@ -174,7 +174,8 @@ python -m tests.test_medsam_segmentation
   title={Simple Agents Outperform Experts in Biomedical Imaging Workflow Optimization},
   author={Wang, Xuefei and Horstmann, Kai A. and Lin, Ethan and Chen, Jonathan and Farhang, Alexander R. and Stiles, Sophia and Sehgal, Atharva and Light, Jonathan and Van Valen, David and Yue, Yisong and Sun, Jennifer J.},
   booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
-  year={2026}
+  year={2026},
+  note={to appear}
 }
 ```
 
