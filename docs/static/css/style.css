@@ -5,9 +5,9 @@
   --color-bg-alt:         #f3f1ec;
   --color-text:           #1a1a1c;
   --color-text-secondary: #71717a;
-  --color-accent:         #2ac5a0;
-  --color-accent-hover:   #22a888;
-  --color-accent-light:   #eefbf7;
+  --color-accent:         #1fa88a;
+  --color-accent-hover:   #178e72;
+  --color-accent-light:   #e6f6f0;
   --color-border:         #e4e1db;
   --color-border-light:   #edebe6;
   --color-code-bg:        #1d1d1b;
@@ -28,9 +28,9 @@
   --color-bg-alt:         #252320;
   --color-text:           #e8e6e1;
   --color-text-secondary: #9ca3af;
-  --color-accent:         #2ac5a0;
-  --color-accent-hover:   #33d9b2;
-  --color-accent-light:   rgba(42, 197, 160, 0.12);
+  --color-accent:         #1fa88a;
+  --color-accent-hover:   #28c9a2;
+  --color-accent-light:   rgba(31, 168, 138, 0.12);
   --color-border:         #2e2c2a;
   --color-border-light:   #262422;
   --color-code-bg:        #161614;
@@ -215,7 +215,7 @@ h2::after {
   line-height: 1.2;
   max-width: 800px;
   margin: 0 auto 1.4rem;
-  background: linear-gradient(135deg, #0e3028 0%, var(--color-accent) 100%);
+  background: linear-gradient(135deg, #0c2a22 0%, var(--color-accent) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -413,7 +413,7 @@ h2::after {
 .design-table { min-width: 680px; }
 .design-table th { font-size: 0.76rem; padding: 0.55rem 0.5rem; }
 .design-table td { padding: 0.55rem 0.5rem; }
-.cell-good { background: rgba(42, 197, 160, 0.1); }
+.cell-good { background: rgba(31, 168, 138, 0.1); }
 .cell-bad  { background: rgba(255, 178, 80,  0.1); }
 
 /* ===== Task Showcase ===== */
