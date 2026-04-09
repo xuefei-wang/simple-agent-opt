@@ -46,6 +46,20 @@ body::before {
 section { padding: var(--section-pad) 0; }
 section:nth-child(even) { background: var(--color-bg-alt); }
 
+/* ===== Conference Badge ===== */
+.conf-badge {
+  display: inline-block;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #fff;
+  background: var(--color-accent);
+  padding: 0.3rem 0.9rem;
+  border-radius: 999px;
+  margin-bottom: 1rem;
+}
+
 /* ===== Hero ===== */
 .hero {
   padding: clamp(3.5rem, 8vw, 6rem) 0 var(--section-pad);
