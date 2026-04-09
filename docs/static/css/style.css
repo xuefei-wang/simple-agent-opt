@@ -211,7 +211,7 @@ h2::after {
   font-family: var(--font-serif);
   font-size: clamp(1.75rem, 3.8vw, 2.6rem);
   font-weight: 600;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.035em;
   line-height: 1.2;
   max-width: 800px;
   margin: 0 auto 1.4rem;
