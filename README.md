@@ -2,6 +2,8 @@
 
 # Simple Agents Outperform Experts in Biomedical Imaging Workflow Optimization
 
+**CVPR 2026**
+
 **[Paper (arXiv)](https://arxiv.org/abs/2512.06006)** &nbsp;|&nbsp; **[Project Page](https://xuefei-wang.github.io/simple-agent-opt/)**
 
 Xuefei (Julie) Wang, Kai A. Horstmann, Ethan Lin, Jonathan Chen, Alexander R. Farhang, Sophia Stiles,<br>
@@ -168,11 +170,12 @@ python -m tests.test_medsam_segmentation
 ## Citation
 
 ```bibtex
-@article{wang2025simple,
+@inproceedings{wang2026simple,
   title={Simple Agents Outperform Experts in Biomedical Imaging Workflow Optimization},
   author={Wang, Xuefei and Horstmann, Kai A. and Lin, Ethan and Chen, Jonathan and Farhang, Alexander R. and Stiles, Sophia and Sehgal, Atharva and Light, Jonathan and Van Valen, David and Yue, Yisong and Sun, Jennifer J.},
-  journal={arXiv preprint arXiv:2512.06006},
-  year={2025}
+  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
+  year={2026},
+  note={to appear}
 }
 ```
 

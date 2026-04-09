@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,17 +7,48 @@
   <meta name="description" content="AI agents autonomously optimize preprocessing and postprocessing for scientific image analysis, outperforming human-expert solutions on three production-level biomedical imaging pipelines.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&family=Noto+Serif:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300..700;1,8..60,300..600&family=Inter:opsz,wght@14..32,300..700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
   <link rel="stylesheet" href="static/css/style.css">
+  <script>
+    // Apply theme before first paint to avoid flash
+    (function() {
+      var saved = localStorage.getItem('theme');
+      var preferred = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : '';
+      document.documentElement.setAttribute('data-theme', saved !== null ? saved : preferred);
+    })();
+  </script>
 </head>
 <body>
 
-  <!-- ==================== Hero ==================== -->
-  <section class="hero">
-    <div class="container">
-      <h1>Simple Agents Outperform Experts in Biomedical Imaging Workflow Optimization</h1>
+  <a href="#abstract" class="skip-link">Skip to content</a>
 
+  <!-- ==================== Navigation ==================== -->
+  <header class="site-header">
+    <nav class="nav" aria-label="Primary navigation">
+      <a href="#" class="nav-name">Simple Agents</a>
+      <div class="nav-links">
+        <a href="#abstract">Abstract</a>
+        <a href="#method">Method</a>
+        <a href="#results">Results</a>
+        <a href="#citation">Cite</a>
+      </div>
+      <button class="theme-toggle" aria-label="Toggle dark mode" onclick="toggleTheme()">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      </button>
+      <button class="nav-toggle" aria-label="Toggle navigation">
+        <span></span>
+        <span></span>
+      </button>
+    </nav>
+  </header>
+
+  <!-- ==================== Hero ==================== -->
+  <section class="hero-section">
+    <div class="container">
+      <div class="conf-badge">CVPR 2026</div>
+      <h1>Simple Agents Outperform Experts in Biomedical Imaging Workflow Optimization</h1>
       <p class="authors">
         Xuefei (Julie) Wang<sup>1</sup>,
         Kai A. Horstmann<sup>2</sup>,
@@ -37,7 +68,6 @@
         <sup>3</sup>UT Austin &nbsp;
         <sup>4</sup>Rensselaer Polytechnic Institute
       </p>
-
       <div class="hero-buttons">
         <a class="btn btn--primary" href="https://arxiv.org/abs/2512.06006" target="_blank" rel="noopener">
           <i class="ai ai-arxiv"></i> arXiv
@@ -55,9 +85,9 @@
   </section>
 
   <!-- ==================== Abstract ==================== -->
-  <section>
+  <section id="abstract" class="animate-in">
     <div class="container">
-      <h2 class="section-title">Abstract</h2>
+      <h2>Abstract</h2>
       <p class="abstract-text">
         Adapting production-level computer vision tools to bespoke scientific datasets is a critical
         &ldquo;last mile&rdquo; bottleneck. Current solutions are impractical: fine-tuning requires large
@@ -68,7 +98,7 @@
         biomedical imaging pipelines. We demonstrate that a simple agent framework consistently
         generates adaptation code that outperforms human-expert solutions. Our analysis reveals that
         common, complex agent architectures are not universally beneficial, leading to a practical
-        roadmap for agent design. We open source our framework and validate our approach by deploying
+        roadmap for agent design. We open-source our framework and validate our approach by deploying
         agent-generated functions into a production pipeline, demonstrating a clear pathway for
         real-world impact.
       </p>
@@ -76,10 +106,9 @@
   </section>
 
   <!-- ==================== Key Findings ==================== -->
-  <section class="highlights">
+  <section class="animate-in">
     <div class="container">
-      <h2 class="section-title">Key Findings</h2>
-
+      <h2>Key Findings</h2>
       <div class="findings-list">
         <div class="finding">
           <div class="finding-icon">1</div>
@@ -114,10 +143,9 @@
   </section>
 
   <!-- ==================== Method ==================== -->
-  <section>
+  <section id="method" class="animate-in">
     <div class="container">
-      <h2 class="section-title">Method</h2>
-
+      <h2>Method</h2>
       <figure class="method-figure method-figure--portrait method-figure--dark">
         <img src="static/images/pipeline.png" alt="Agent optimization pipeline diagram">
         <figcaption>
@@ -126,7 +154,6 @@
           accumulates all solutions with metrics, feeding the best and worst back into prompts to guide exploration.
         </figcaption>
       </figure>
-
       <ul class="method-points">
         <li><strong>Base Agent</strong> &mdash; a coding agent (LLM-powered) and an execution agent alternate via state transitions. A task prompt and data prompt provide context; a curated API list gives the agent relevant function signatures.</li>
         <li><strong>Function Bank</strong> &mdash; a persistent memory of all generated solutions and their scores. The top-k and bottom-k functions are fed back into prompts to guide further exploration.</li>
@@ -137,12 +164,10 @@
   </section>
 
   <!-- ==================== Results ==================== -->
-  <section>
+  <section id="results" class="animate-in">
     <div class="container">
-      <h2 class="section-title">Results</h2>
-
-      <p class="results-intro">Design Choice Study. Across all agent settings, all except the &ldquo;Small LLM&rdquo; outperform the expert baseline. We observe mixed effects across many design choices&mdash;what helps one task can hurt another.</p>
-
+      <h2>Results</h2>
+      <p class="results-intro">Design choice study. Across all agent settings, all except the &ldquo;Small LLM&rdquo; outperform the expert baseline. We observe mixed effects across many design choices&mdash;what helps one task can hurt another.</p>
       <div class="table-wrap">
         <table class="results-table design-table">
           <thead>
@@ -171,7 +196,7 @@
               <td class="cell-good">0.868</td>
             </tr>
             <tr>
-              <td><strong>Cellpose</strong> <span class="table-metric">AP@0.5</span></td>
+              <td><strong>Cellpose</strong> <span class="table-metric">AP@IoU 0.5</span></td>
               <td>0.402</td>
               <td>0.409</td>
               <td class="cell-good">0.410</td>
@@ -195,7 +220,6 @@
           </tbody>
         </table>
       </div>
-
       <figure class="method-figure method-figure--dark">
         <img src="static/images/results.png" alt="Comparison of expert-optimized and agent-optimized segmentation results">
         <figcaption>
@@ -207,44 +231,38 @@
   </section>
 
   <!-- ==================== Task Showcase ==================== -->
-  <section>
+  <section class="animate-in">
     <div class="container">
-      <h2 class="section-title">Task Showcase</h2>
-
+      <h2>Task Showcase</h2>
       <div class="task-grid">
-        <!-- Spot Detection -->
         <div class="task-card">
           <img src="static/images/spot.png" alt="Spot detection example">
           <div class="task-card-body">
             <span class="scale-label">Molecular</span>
             <h3>Spot Detection</h3>
             <span class="tool-tag">Polaris / DeepCell</span>
-            <p class="metric">Metric: F1 score &middot; Expert: 0.841 &middot; Best agent: 0.929</p>
-            <p>Detecting sub-pixel fluorescent spots for image-based spatial transcriptomics across modalities using different RNA capturing and tagging methods. Validated on 95 images.</p>
+            <p class="task-metric">F1 score &middot; Expert: 0.841 &middot; Best agent: 0.929</p>
+            <p>Detecting sub-pixel fluorescent spots for image-based spatial transcriptomics across modalities. Validated on 95 images.</p>
           </div>
         </div>
-
-        <!-- Cellpose -->
         <div class="task-card">
           <img src="static/images/cellpose.png" alt="Cell segmentation example">
           <div class="task-card-body">
             <span class="scale-label">Cellular</span>
             <h3>Cell Segmentation</h3>
             <span class="tool-tag">Cellpose 3 (cyto3)</span>
-            <p class="metric">Metric: AP @ IoU 0.5 &middot; Expert: 0.402 &middot; Best agent: 0.417</p>
-            <p>Cell instance segmentation on multiple modalities including whole cell &amp; nucleus, fluorescent, and phase bacterial images. Validated on 100 images.</p>
+            <p class="task-metric">AP @ IoU 0.5 &middot; Expert: 0.402 &middot; Best agent: 0.417</p>
+            <p>Cell instance segmentation across whole cell &amp; nucleus, fluorescent, and phase bacterial images. Validated on 100 images.</p>
           </div>
         </div>
-
-        <!-- MedSAM -->
         <div class="task-card">
           <img src="static/images/medsam.png" alt="Medical segmentation example">
           <div class="task-card-body">
             <span class="scale-label">Macroscopic</span>
             <h3>Medical Segmentation</h3>
             <span class="tool-tag">MedSAM</span>
-            <p class="metric">Metric: NSD + DSC &middot; Expert: 0.820 &middot; Best agent: 1.037</p>
-            <p>Medical image segmentation using an extension of the Segment Anything Model adapted to medical domains, evaluated on dermoscopy data. Validated on 25 images.</p>
+            <p class="task-metric">NSD + DSC &middot; Expert: 0.820 &middot; Best agent: 1.037</p>
+            <p>Medical image segmentation using an extension of the Segment Anything Model, evaluated on dermoscopy data. Validated on 25 images.</p>
           </div>
         </div>
       </div>
@@ -252,11 +270,12 @@
   </section>
 
   <!-- ==================== Getting Started ==================== -->
-  <section class="getting-started">
+  <section class="animate-in">
     <div class="container">
-      <h2 class="section-title">Getting Started</h2>
-      <p>Clone the repository and install dependencies using <a href="https://docs.astral.sh/uv/" target="_blank" rel="noopener">uv</a>. See the <a href="https://github.com/xuefei-wang/simple-agent-opt/blob/main/docs/adding_a_task.md" target="_blank" rel="noopener">Adding a Task</a> guide for extending the framework to new workflows.</p>
-
+      <h2>Getting Started</h2>
+      <p style="font-size:0.95rem;color:var(--color-text-secondary);">
+        Clone the repository and install dependencies using <a href="https://docs.astral.sh/uv/" target="_blank" rel="noopener">uv</a>. See the <a href="https://github.com/xuefei-wang/simple-agent-opt/blob/main/docs/adding_a_task.md" target="_blank" rel="noopener">Adding a Task</a> guide for extending the framework to new workflows.
+      </p>
       <div class="code-block">
         <span class="code-label">bash</span>
 <pre><span class="comment"># Clone and install</span>
@@ -278,23 +297,24 @@
   </section>
 
   <!-- ==================== Citation ==================== -->
-  <section class="citation" id="citation">
+  <section id="citation" class="animate-in">
     <div class="container">
-      <h2 class="section-title">Citation</h2>
-      <p>If you find this work useful, please cite our paper:</p>
-
+      <h2>Citation</h2>
+      <p style="font-size:0.95rem;color:var(--color-text-secondary);">If you find this work useful, please cite our paper:</p>
       <div class="code-block">
         <span class="code-label">bibtex</span>
         <button class="copy-btn" onclick="copyBibtex(this)">Copy</button>
-<pre id="bibtex">@article{wang2025simple,
-  title   = {Simple Agents Outperform Experts in Biomedical Imaging
-             Workflow Optimization},
-  author  = {Wang, Xuefei and Horstmann, Kai A. and Lin, Ethan and
-             Chen, Jonathan and Farhang, Alexander R. and Stiles, Sophia and
-             Sehgal, Atharva and Light, Jonathan and Van Valen, David and
-             Yue, Yisong and Sun, Jennifer J.},
-  journal = {arXiv preprint arXiv:2512.06006},
-  year    = {2025}
+<pre id="bibtex">@inproceedings{wang2026simple,
+  title     = {Simple Agents Outperform Experts in Biomedical Imaging
+               Workflow Optimization},
+  author    = {Wang, Xuefei and Horstmann, Kai A. and Lin, Ethan and
+               Chen, Jonathan and Farhang, Alexander R. and Stiles, Sophia and
+               Sehgal, Atharva and Light, Jonathan and Van Valen, David and
+               Yue, Yisong and Sun, Jennifer J.},
+  booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision
+               and Pattern Recognition (CVPR)},
+  year      = {2026},
+  note      = {to appear}
 }</pre>
       </div>
     </div>
@@ -304,21 +324,51 @@
   <footer>
     <div class="container">
       <p>
-        This project is licensed under the <a href="https://github.com/xuefei-wang/simple-agent-opt/blob/main/LICENSE" target="_blank" rel="noopener">Apache License 2.0</a>.
-        Website template inspired by <a href="https://nerfies.github.io" target="_blank" rel="noopener">Nerfies</a>.
+        Licensed under the <a href="https://github.com/xuefei-wang/simple-agent-opt/blob/main/LICENSE" target="_blank" rel="noopener">Apache License 2.0</a>.
       </p>
     </div>
   </footer>
 
   <!-- ==================== Scripts ==================== -->
   <script>
+    function toggleTheme() {
+      var html = document.documentElement;
+      var next = html.getAttribute('data-theme') === 'dark' ? '' : 'dark';
+      html.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+    }
+
     function copyBibtex(btn) {
-      const text = document.getElementById('bibtex').textContent;
-      navigator.clipboard.writeText(text).then(() => {
+      navigator.clipboard.writeText(document.getElementById('bibtex').textContent).then(function() {
         btn.textContent = 'Copied!';
-        setTimeout(() => { btn.textContent = 'Copy'; }, 2000);
+        setTimeout(function() { btn.textContent = 'Copy'; }, 2000);
       });
     }
+
+    // Scroll-based header border
+    var header = document.querySelector('.site-header');
+    window.addEventListener('scroll', function() {
+      header.classList.toggle('scrolled', window.scrollY > 10);
+    }, { passive: true });
+
+    // Mobile nav toggle
+    var navToggle = document.querySelector('.nav-toggle');
+    var navLinks = document.querySelector('.nav-links');
+    navToggle.addEventListener('click', function() {
+      navToggle.classList.toggle('active');
+      navLinks.classList.toggle('open');
+    });
+
+    // Scroll-in animations
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.animate-in').forEach(function(el) { observer.observe(el); });
   </script>
 
 </body>
